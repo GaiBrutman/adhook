@@ -1,3 +1,11 @@
+/**
+ * @file jump.h
+ * @author Gai Brutman
+ * @brief Branch instruction patching mechanism.
+ * @version 0.1
+ * @date 2022-03-09
+ */
+
 #pragma once
 
 #include <stdlib.h>

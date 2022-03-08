@@ -1,3 +1,11 @@
+/**
+ * @file symsize.h
+ * @author Gai Brutman
+ * @brief Symbol size calculation.
+ * @version 0.1
+ * @date 2022-03-09
+ */
+
 #pragma once
 
 #include <stdlib.h>
