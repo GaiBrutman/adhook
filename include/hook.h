@@ -48,8 +48,8 @@ struct hook
 /**
  * @brief Subscribe to a hook.
  *
- * @param hook The hook to subscribe to.
- * @param callback The callback to call when the hook is triggered.
+ * @param[in,out] hook The hook to subscribe to.
+ * @param[in] callback The callback to call when the hook is triggered.
  * @return struct handle* The handle to use when unsubscribing.
  */
 struct handle *hook_subscribe(struct hook *hook, void *callback);
@@ -57,8 +57,8 @@ struct handle *hook_subscribe(struct hook *hook, void *callback);
 /**
  * @brief Unsubscribe from a hook.
  *
- * @param hook The hook to unsubscribe from.
- * @param handle The handle to unsubscribe.
+ * @param[in,out] hook The hook to unsubscribe from.
+ * @param[in] handle The handle to unsubscribe.
  * @return int 0 on success, other on failure.
  */
 int hook_unsubscribe(struct hook *hook, struct handle *handle);
@@ -66,7 +66,7 @@ int hook_unsubscribe(struct hook *hook, struct handle *handle);
 /**
  * @brief Clear all handles from a hook.
  *
- * @param hook The hook to clear.
+ * @param[in,out] hook The hook to clear.
  * @return int 0 on success, other on failure.
  */
 int hook_clear(struct hook *hook);

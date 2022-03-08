@@ -13,9 +13,9 @@
 /**
  * @brief Patch a jump instruction on a symbol.
  *
- * @param symbol The symbol to patch.
- * @param size The size of the symbol.
- * @param target The target address of the jump.
+ * @param[in,out] symbol The symbol to patch.
+ * @param[in] size The size of the symbol.
+ * @param[in] target The target address of the jump.
  * @return int 0 on success, other on failure.
  */
 int patch_jump(void *symbol, size_t size, void *target);
