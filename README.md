@@ -1,12 +1,12 @@
 # ad-hook
 
-ad-hook is am advanced, cross-architecture hooking framework, for you and your family.
+ad-hook is an advanced, cross-architecture hooking framework, for you and your family.
 
 ## Features
 
 ### Multiple handlers per hook
 
-Multiple handlers can subscribe to a single hook, than be called sequentialy.
+Multiple handlers can subscribe to a single hook, than be called sequentially.
 Each handler can either yield, or continue to the next handle via `call_next()`
 
 ### Implementation independent functionality
