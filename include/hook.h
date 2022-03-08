@@ -30,7 +30,7 @@ struct handle
 struct hook
 {
     void *symbol;                  // Hooked symbol.
-    bool attached;                 // Whether the hook is attached
+    bool attached;                 // Whether the hook is attached.
     struct handle *handles;        // Linked list of handles.
     struct handle *current_handle; // Current handle.
     struct handle *last_handle;    // Last handle.
