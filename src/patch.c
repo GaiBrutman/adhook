@@ -13,6 +13,14 @@ struct patch_priv
     size_t backup_size;
 };
 
+/**
+ * @brief Prepare a hook resources for a jump patch.
+ *
+ * @param[in,out] hook The hook to prepare.
+ * @param[in] symbol The symbol to hook.
+ * @param[in] size The size of the symbol.
+ * @return int 0 on success, other on failure.
+ */
 static int prepare_patch(struct hook *hook, void *symbol, size_t size)
 {
     int ret = 0;
