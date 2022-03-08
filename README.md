@@ -2,6 +2,12 @@
 
 ad-hook is an advanced, cross-architecture hooking framework, for you and your family.
 
+## Build Instructions
+
+```sh
+make # :)
+```
+
 ## Features
 
 ### Multiple handlers per hook
