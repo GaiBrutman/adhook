@@ -14,13 +14,13 @@
 /**
  * @brief Call the next handle in the hook.
  */
-#define call_next(hook, ...)                                             \
-    ({                                                                   \
-        if ((hook)->handles->next)                                       \
-        {                                                                \
-            (hook)->current_handle = (hook)->handles->next;              \
-            void *__ret = (hook)->current_handle->callback(__VA_ARGS__); \
-        }                                                                \
+#define call_next(hook, ...)                                      \
+    ({                                                            \
+        if ((hook)->handles->next)                                \
+        {                                                         \
+            (hook)->current_handle = (hook)->handles->next;       \
+            return (hook)->current_handle->callback(__VA_ARGS__); \
+        }                                                         \
     })
 
 /**

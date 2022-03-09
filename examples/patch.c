@@ -45,6 +45,7 @@ static bool my_is_admin(struct user *user)
     user->age = 1000;
 
     call_next(&g_is_admin_hook, user);
+    return true; // Fallback if no other handle is subscribed.
 }
 
 static bool this_is_another_is_admin_hook(struct user *user)
