@@ -25,7 +25,7 @@ OBJECTS :=	$(BUILD_DIR)/hook.o																\
 
 EXAMPLES := $(EXAMPLES_BIN_DIR)/patch
 
-CFLAGS += -m32 -I$(INCLUDE_DIR)
+CFLAGS += -m32 -I$(INCLUDE_DIR) -Wall -Werror -Wno-unused-variable -Wno-unused-function
 LDFLAGS := -rcs
 
 all: $(TARGET) examples
