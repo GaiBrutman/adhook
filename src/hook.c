@@ -29,13 +29,13 @@ struct handle *hook_subscribe(struct hook *hook, void *callback)
         // First handle.
         hook->handles = handle;
         hook->current_handle = handle;
-        hook->last_handle = handle;
     }
     else
     {
         // Link handle to hook.
         hook->last_handle->next = handle;
     }
+    hook->last_handle = handle;
 
     return handle;
 }
@@ -60,11 +60,17 @@ int hook_unsubscribe(struct hook *hook, struct handle *handle)
             // Unlink handle from hook.
             if (NULL == prev)
             {
-                hook->handles = curr->next;
+                hook->handles = hook->current_handle = curr->next;
             }
             else
             {
                 prev->next = curr->next;
+            }
+
+            // unlink last handle
+            if (curr == hook->last_handle)
+            {
+                hook->last_handle = prev;
             }
 
             // Free handle.
@@ -75,6 +81,7 @@ int hook_unsubscribe(struct hook *hook, struct handle *handle)
         prev = curr;
         curr = curr->next;
     }
+    hook->current_handle = hook->handles;
 
     // did not find handle
     return ESRCH;
