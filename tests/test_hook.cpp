@@ -54,6 +54,20 @@ TEST(hook, subscribe_null)
     ASSERT_EQ(NULL, hook.last_handle);
 }
 
+TEST(hook, subscribe_twice)
+{
+    struct hook hook = {0};
+    struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle);
+
+    struct handle *handle2 = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle2);
+
+    ASSERT_EQ(handle, hook.handles);
+    ASSERT_EQ(handle, hook.current_handle);
+    ASSERT_EQ(handle2, hook.last_handle);
+}
+
 TEST(hook, unsubscribe)
 {
     struct hook hook = {0};
