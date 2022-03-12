@@ -10,6 +10,11 @@ struct handle *hook_subscribe(struct hook *hook, void *callback)
         errno = EINVAL;
         return NULL;
     }
+    if (hook->attached)
+    {
+        errno = EBUSY;
+        return NULL;
+    }
 
     struct handle *handle = malloc(sizeof(struct handle));
     if (NULL == handle)
@@ -40,6 +45,10 @@ int hook_unsubscribe(struct hook *hook, struct handle *handle)
     if (NULL == hook || NULL == handle)
     {
         return EINVAL;
+    }
+    if (hook->attached)
+    {
+        return EBUSY;
     }
 
     struct handle *prev = NULL;
