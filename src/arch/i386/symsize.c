@@ -6,6 +6,7 @@
 
 // TODO: Detect more function return instructions.
 #define x86_RET_OPCODE (0xc3)
+#define x86_RET_OPCODE_SIZE (1)
 
 void *x86_search_for_ret(void *func)
 {
@@ -20,5 +21,5 @@ void *x86_search_for_ret(void *func)
 size_t calc_function_size(void *func)
 {
     void *end = x86_search_for_ret(func);
-    return (size_t)end - (size_t)func;
+    return ((size_t)end - (size_t)func) + x86_RET_OPCODE_SIZE;
 }
