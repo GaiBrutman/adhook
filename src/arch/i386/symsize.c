@@ -8,6 +8,7 @@
 #define x86_RET_OPCODE (0xc3)
 #define x86_RET_OPCODE_SIZE (1)
 
+// FIXME: There can be more than one return instruction.
 void *x86_search_for_ret(void *func)
 {
     uint8_t *ptr = (uint8_t *)func;
