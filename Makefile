@@ -61,7 +61,7 @@ GTEST_SRCS_ = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 all: $(TARGET) examples test
 
 .PHONY: examples
-examples: $(EXAMPLES)
+examples: $(TARGET) $(EXAMPLES)
 
 $(EXAMPLES_BIN_DIR)/% : $(EXAMPLES_DIR)/%.c
 	mkdir -p $(shell dirname $@)
