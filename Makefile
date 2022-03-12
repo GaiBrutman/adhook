@@ -46,7 +46,8 @@ CXXFLAGS += -g -m32 -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TEST_OBJECTS := $(TESTS_BUILD_DIR)/test_hook.o
+TEST_OBJECTS := $(TESTS_BUILD_DIR)/test_hook.o \
+				$(TESTS_BUILD_DIR)/test_symsize.o
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
