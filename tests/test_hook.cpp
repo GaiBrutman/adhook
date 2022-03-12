@@ -112,4 +112,107 @@ TEST(hook, unsibscribe_twice)
     ASSERT_EQ(NULL, hook.last_handle);
 }
 
+TEST(hook, subscribe_unsubscribe_subscribe)
+{
+    struct hook hook = {0};
+    struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle);
+
+    ASSERT_EQ(0, hook_unsubscribe(&hook, handle));
+    ASSERT_EQ(NULL, hook.handles);
+    ASSERT_EQ(NULL, hook.current_handle);
+    ASSERT_EQ(NULL, hook.last_handle);
+
+    struct handle *handle2 = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle2);
+
+    ASSERT_EQ(handle2, hook.handles);
+    ASSERT_EQ(handle2, hook.current_handle);
+    ASSERT_EQ(handle2, hook.last_handle);
+}
+
+TEST(hook, unsubscribe_first)
+{
+    struct hook hook = {0};
+    struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle);
+
+    struct handle *handle2 = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle2);
+
+    ASSERT_EQ(0, hook_unsubscribe(&hook, handle));
+    ASSERT_EQ(handle2, hook.handles);
+    ASSERT_EQ(handle2, hook.current_handle);
+    ASSERT_EQ(handle2, hook.last_handle);
+}
+
+TEST(hook, unsubscribe_last)
+{
+    struct hook hook = {0};
+    struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle);
+
+    struct handle *handle2 = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle2);
+
+    ASSERT_EQ(0, hook_unsubscribe(&hook, handle2));
+    ASSERT_EQ(handle, hook.handles);
+    ASSERT_EQ(handle, hook.current_handle);
+    ASSERT_EQ(handle, hook.last_handle);
+}
+
+TEST(hook, three_handles_unsubscribe_first)
+{
+    struct hook hook = {0};
+    struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle);
+
+    struct handle *handle2 = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle2);
+
+    struct handle *handle3 = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle3);
+
+    ASSERT_EQ(0, hook_unsubscribe(&hook, handle));
+    ASSERT_EQ(handle2, hook.handles);
+    ASSERT_EQ(handle2, hook.current_handle);
+    ASSERT_EQ(handle3, hook.last_handle);
+}
+
+TEST(hook, three_handles_unsubscribe_second)
+{
+    struct hook hook = {0};
+    struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle);
+
+    struct handle *handle2 = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle2);
+
+    struct handle *handle3 = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle3);
+
+    ASSERT_EQ(0, hook_unsubscribe(&hook, handle2));
+    ASSERT_EQ(handle, hook.handles);
+    ASSERT_EQ(handle, hook.current_handle);
+    ASSERT_EQ(handle3, hook.last_handle);
+}
+
+TEST(hook, three_handles_unsubscribe_third)
+{
+    struct hook hook = {0};
+    struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle);
+
+    struct handle *handle2 = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle2);
+
+    struct handle *handle3 = hook_subscribe(&hook, (void *)empty_func);
+    ASSERT_NE((void *)NULL, handle3);
+
+    ASSERT_EQ(0, hook_unsubscribe(&hook, handle3));
+    ASSERT_EQ(handle, hook.handles);
+    ASSERT_EQ(handle, hook.current_handle);
+    ASSERT_EQ(handle2, hook.last_handle);
+}
+
 #pragma GCC diagnostic pop
