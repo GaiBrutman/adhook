@@ -35,8 +35,7 @@ LDFLAGS := -rcs
 
 TEST_RUNNER := $(BIN_DIR)/test_runner
 
-# TODO: Ship with gtest as submodule
-GTEST_DIR ?= /usr/src/gtest
+GTEST_DIR ?= ./libs/googletest/googletest
 # Flags passed to the preprocessor.
 # Set Google Test's header directory as a system directory, such that
 # the compiler doesn't generate warnings in Google Test headers.
