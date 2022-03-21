@@ -5,9 +5,9 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#include "patch.h"
-#include "hook.h"
-#include "arch/symsize.h"
+#include "adhook/patch.h"
+#include "adhook/hook.h"
+#include "adhook/arch/symsize.h"
 
 struct user
 {

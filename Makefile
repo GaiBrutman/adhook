@@ -28,7 +28,7 @@ OBJECTS :=	$(BUILD_DIR)/hook.o																\
 
 EXAMPLES := $(EXAMPLES_BIN_DIR)/patch
 
-CFLAGS += -m32 -I$(INCLUDE_DIR) -Wall -Werror -Wno-unused-variable -Wno-unused-function
+CFLAGS += -m32 -I$(INCLUDE_DIR)/adhook -Wall -Werror -Wno-unused-variable -Wno-unused-function
 LDFLAGS := -rcs
 
 ### Tests related ###
@@ -64,7 +64,8 @@ examples: $(TARGET) $(EXAMPLES)
 
 $(EXAMPLES_BIN_DIR)/% : $(EXAMPLES_DIR)/%.c
 	mkdir -p $(shell dirname $@)
-	$(CC) $(CFLAGS) -o $@ $< -L$(BIN_DIR) -l$(NAME)
+    # Include the headers from the root include directory as real users will use the libary.
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -o $@ $< -L$(BIN_DIR) -l$(NAME)
 
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.c
 	mkdir -p $(shell dirname $@)
