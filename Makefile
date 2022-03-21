@@ -28,8 +28,17 @@ OBJECTS :=	$(BUILD_DIR)/hook.o																\
 
 EXAMPLES := $(EXAMPLES_BIN_DIR)/patch
 
-CFLAGS += -m32 -I$(INCLUDE_DIR)/adhook -Wall -Werror -Wno-unused-variable -Wno-unused-function
+CFLAGS += -I$(INCLUDE_DIR)/adhook -Wall -Werror -Wno-unused-variable -Wno-unused-function
 LDFLAGS := -rcs
+
+ifeq ($(ARCH), i386)
+    CFLAGS += -m32
+    CXXFLAGS += -m32
+endif
+ifeq ($(ARCH), x86_64)
+    CFLAGS += -m64
+    CXXFLAGS += -m64
+endif
 
 ### Tests related ###
 
@@ -41,7 +50,7 @@ GTEST_DIR ?= ./libs/googletest/googletest
 # the compiler doesn't generate warnings in Google Test headers.
 CPPFLAGS += -isystem $(GTEST_DIR)/include
 # Flags passed to the C++ compiler.
-CXXFLAGS += -g -m32 -Wall -Wextra -pthread
+CXXFLAGS += -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
