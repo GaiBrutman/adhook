@@ -2,7 +2,7 @@ NAME := adhook
 
 MODE ?= debug
 
-ARCH ?= i386
+ARCH ?= x86_64
 
 LD := $(CC)
 AR := ar
@@ -38,6 +38,10 @@ endif
 ifeq ($(ARCH), x86_64)
     CFLAGS += -m64
     CXXFLAGS += -m64
+endif
+
+ifeq ($(MODE), debug)
+	CFLAGS += -g
 endif
 
 ### Tests related ###
