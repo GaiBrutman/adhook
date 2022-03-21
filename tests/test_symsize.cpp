@@ -13,10 +13,10 @@
 
 extern "C"
 {
-#include "arch/symsize.h"
+#include "adhook/arch/symsize.h"
 }
 
-volatile bool is_prime(int n)
+bool is_prime(int n)
 {
     if (n <= 1)
         return false;
@@ -30,7 +30,7 @@ volatile bool is_prime(int n)
     return true;
 }
 
-volatile int is_prime_delim()
+int is_prime_delim()
 {
     return 0;
 }

@@ -13,7 +13,7 @@
 
 extern "C"
 {
-#include "hook.h"
+#include "adhook/hook.h"
 }
 
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
