@@ -73,8 +73,7 @@ int patch_install(struct hook *hook, void *symbol, size_t size)
     // Patch jump to first handle.
     patch_jump(symbol, size, hook->handles->callback);
 
-    hook->symbol = symbol;
-    hook->attached = true;
+    hook_attach(hook, symbol);
 
 out:
     return ret;
@@ -98,7 +97,7 @@ void patch_uninstall(struct hook *hook)
 
     // Restore the original code.
     memcpy(hook->symbol, priv->symbol_backup, get_payload_size());
-    hook->attached = false;
+    hook_detach(hook);
 
     free(priv->symbol_backup);
 

@@ -46,6 +46,23 @@ struct hook
 };
 
 /**
+ * @brief Attach a hook to a symbol - called by an injector after injection is complete.
+ *
+ * @param hook The hook to attach.
+ * @param symbol The symbol to attach to.
+ * @return int 0 on success, other on failure.
+ */
+int hook_attach(struct hook *hook, void *symbol);
+
+/**
+ * @brief Detach a hook from a symbol - called by an injector after uninjection is complete.
+ * 
+ * @param hook The hook to detach.
+ * @return int 0 on success, other on failure.
+ */
+int hook_detach(struct hook *hook);
+
+/**
  * @brief Subscribe to a hook.
  *
  * @param[in,out] hook The hook to subscribe to.

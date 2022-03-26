@@ -3,6 +3,38 @@
 #include <stdlib.h>
 #include <errno.h>
 
+int hook_attach(struct hook *hook, void *symbol)
+{
+    if (NULL == hook || NULL == symbol)
+    {
+        return EINVAL;
+    }
+    if (hook->attached)
+    {
+        return EALREADY;
+    }
+
+    hook->symbol = symbol;
+    hook->attached = true;
+    return 0;
+}
+
+int hook_detach(struct hook *hook)
+{
+    if (NULL == hook)
+    {
+        return EINVAL;
+    }
+    if (!hook->attached)
+    {
+        return EALREADY;
+    }
+
+    hook->symbol = NULL;
+    hook->attached = false;
+    return 0;
+}
+
 struct handle *hook_subscribe(struct hook *hook, void *callback)
 {
     if (NULL == hook || NULL == callback)

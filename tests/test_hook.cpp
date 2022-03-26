@@ -215,4 +215,106 @@ TEST(hook, three_handles_unsubscribe_third)
     ASSERT_EQ(handle2, hook.last_handle);
 }
 
+TEST(hook, attach)
+{
+    struct hook hook = {0};
+    ASSERT_EQ(hook.attached, false);
+
+    ASSERT_EQ(0, hook_attach(&hook, (void *)empty_func));
+
+    ASSERT_EQ(hook.attached, true);
+    ASSERT_EQ(empty_func, hook.symbol);
+}
+
+TEST(hook, attach_twice)
+{
+    struct hook hook = {0};
+    ASSERT_EQ(hook.attached, false);
+
+    ASSERT_EQ(0, hook_attach(&hook, (void *)empty_func));
+
+    ASSERT_EQ(hook.attached, true);
+    ASSERT_EQ(empty_func, hook.symbol);
+
+    ASSERT_EQ(EALREADY, hook_attach(&hook, (void *)0xDEADBEEF));
+
+    ASSERT_EQ(hook.attached, true);
+    ASSERT_EQ(empty_func, hook.symbol);
+}
+
+TEST(hook, attach_invalid)
+{
+    struct hook hook = {0};
+    ASSERT_EQ(hook.attached, false);
+
+    ASSERT_EQ(EINVAL, hook_attach(&hook, NULL));
+
+    ASSERT_EQ(hook.attached, false);
+    ASSERT_EQ(NULL, hook.symbol);
+
+    ASSERT_EQ(EINVAL, hook_attach(NULL, (void *)empty_func));
+}
+
+TEST(hook, attach_then_attach_invalid)
+{
+    struct hook hook = {0};
+    ASSERT_EQ(hook.attached, false);
+
+    ASSERT_EQ(0, hook_attach(&hook, (void *)empty_func));
+
+    ASSERT_EQ(hook.attached, true);
+    ASSERT_EQ(empty_func, hook.symbol);
+
+    ASSERT_EQ(EINVAL, hook_attach(&hook, NULL));
+
+    ASSERT_EQ(hook.attached, true);
+    ASSERT_EQ(empty_func, hook.symbol);
+}
+
+TEST(hook, attach_detach)
+{
+    struct hook hook = {0};
+    ASSERT_EQ(hook.attached, false);
+
+    ASSERT_EQ(0, hook_attach(&hook, (void *)empty_func));
+
+    ASSERT_EQ(hook.attached, true);
+    ASSERT_EQ(empty_func, hook.symbol);
+
+    ASSERT_EQ(0, hook_detach(&hook));
+
+    ASSERT_EQ(hook.attached, false);
+    ASSERT_EQ(NULL, hook.symbol);
+}
+
+TEST(hook, detach_no_attach)
+{
+    struct hook hook = {0};
+
+    ASSERT_EQ(EALREADY, hook_detach(&hook));
+
+    ASSERT_EQ(hook.attached, false);
+    ASSERT_EQ(NULL, hook.symbol);
+}
+
+TEST(hook, attach_detach_detach)
+{
+    struct hook hook = {0};
+
+    ASSERT_EQ(0, hook_attach(&hook, (void *)empty_func));
+
+    ASSERT_EQ(hook.attached, true);
+    ASSERT_EQ(empty_func, hook.symbol);
+
+    ASSERT_EQ(0, hook_detach(&hook));
+
+    ASSERT_EQ(hook.attached, false);
+    ASSERT_EQ(NULL, hook.symbol);
+
+    ASSERT_EQ(EALREADY, hook_detach(&hook));
+
+    ASSERT_EQ(hook.attached, false);
+    ASSERT_EQ(NULL, hook.symbol);
+}
+
 #pragma GCC diagnostic pop
