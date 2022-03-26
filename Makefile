@@ -88,10 +88,6 @@ $(TARGET): $(OBJECTS)
 	mkdir -p $(shell dirname $@)
 	$(AR) $(LDFLAGS) $@ $^
 
-ifneq ($(MODE), debug)
-	strip -sXx $@ -o $@
-endif
-
 .PHONY: test
 test: $(TEST_RUNNER)
 
