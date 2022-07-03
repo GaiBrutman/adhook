@@ -1,16 +1,16 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
+#include "adhook/patch.h"
+
 #include <errno.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 #include <sys/mman.h>
 #include <unistd.h>
 
-#include "adhook/patch.h"
-#include "adhook/hook.h"
 #include "adhook/arch/symsize.h"
+#include "adhook/hook.h"
 
-struct user
-{
+struct user {
     char name[20];
     int age;
 };
@@ -35,7 +35,7 @@ static bool is_admin(struct user *user)
     return 0 == strcmp(user->name, g_admin_user.name);
 }
 
-struct hook g_is_admin_hook = {0};
+struct hook g_is_admin_hook = { 0 };
 
 static bool my_is_admin(struct user *user)
 {
@@ -63,15 +63,13 @@ int install_is_admin_hook(void)
     printf("func_size: %zu\n", func_size);
 
     handle = hook_subscribe(&g_is_admin_hook, my_is_admin);
-    if (NULL == handle)
-    {
+    if (NULL == handle) {
         ret = ENOMEM;
         goto out;
     }
 
     handle = hook_subscribe(&g_is_admin_hook, this_is_another_is_admin_hook);
-    if (NULL == handle)
-    {
+    if (NULL == handle) {
         ret = ENOMEM;
         goto out;
     }
@@ -94,26 +92,21 @@ void uninstall_is_admin_hook(void)
 
 int main(void)
 {
-    struct user user = {
-        .name = "guest",
-        .age = 20};
+    struct user user = { .name = "guest", .age = 20 };
     size_t is_admin_addr = (size_t)is_admin;
 
     // Set is_admin memory protection to RWX.
-    if (0 != mprotect((void *)PAGE_ALIGN(is_admin_addr), PAGE_SIZE, PROT_READ | PROT_WRITE | PROT_EXEC))
-    {
+    if (0 != mprotect((void *)PAGE_ALIGN(is_admin_addr), PAGE_SIZE,
+                      PROT_READ | PROT_WRITE | PROT_EXEC)) {
         printf("mprotect failed: %s\n", strerror(errno));
         return errno;
     }
 
     install_is_admin_hook();
 
-    if (is_admin(&user))
-    {
+    if (is_admin(&user)) {
         printf("Welcome, admin!\n");
-    }
-    else
-    {
+    } else {
         printf("Welcome, guest!\n");
     }
 

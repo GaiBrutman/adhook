@@ -1,10 +1,10 @@
 #include "arch/jump.h"
 
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
 #include <errno.h>
+#include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // #define JUMP_SIZE 12
 
@@ -21,8 +21,7 @@ int patch_jump(void *symbol, size_t size, void *target)
 {
     char *payload = MOV_RAX_IMM64(ADDR_PLACEHOLDER) PUSH_RAX RET;
 
-    if (size < JUMP_SIZE)
-    {
+    if (size < JUMP_SIZE) {
         return EINVAL;
     }
 

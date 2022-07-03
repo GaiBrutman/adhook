@@ -6,13 +6,12 @@
  * @date 2022-03-12
  */
 
-#include <stdlib.h>
 #include <cstddef>
+#include <stdlib.h>
 
 #include <gtest/gtest.h>
 
-extern "C"
-{
+extern "C" {
 #include <adhook/arch/symsize.h>
 }
 

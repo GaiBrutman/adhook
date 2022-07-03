@@ -6,13 +6,12 @@
  * @date 2022-03-12
  */
 
-#include <stdlib.h>
 #include <cstddef>
+#include <stdlib.h>
 
 #include <gtest/gtest.h>
 
-extern "C"
-{
+extern "C" {
 #include <adhook/hook.h>
 }
 
@@ -25,7 +24,7 @@ void empty_func()
 
 TEST(hook, init)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     ASSERT_EQ(NULL, hook.symbol);
     ASSERT_EQ(false, hook.attached);
     ASSERT_EQ(NULL, hook.handles);
@@ -36,7 +35,7 @@ TEST(hook, init)
 
 TEST(hook, subscribe)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
     ASSERT_NE((void *)NULL, handle);
 
@@ -48,7 +47,7 @@ TEST(hook, subscribe)
 
 TEST(hook, subscribe_null)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     ASSERT_EQ(NULL, hook_subscribe(&hook, NULL));
     ASSERT_EQ(NULL, hook.handles);
     ASSERT_EQ(NULL, hook.current_handle);
@@ -57,7 +56,7 @@ TEST(hook, subscribe_null)
 
 TEST(hook, subscribe_twice)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
     ASSERT_NE((void *)NULL, handle);
 
@@ -71,7 +70,7 @@ TEST(hook, subscribe_twice)
 
 TEST(hook, unsubscribe)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
     ASSERT_NE((void *)NULL, handle);
 
@@ -81,14 +80,14 @@ TEST(hook, unsubscribe)
 
 TEST(hook, unsubscribe_null)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     ASSERT_EQ(EINVAL, hook_unsubscribe(&hook, NULL));
     ASSERT_EQ(NULL, hook.handles);
 }
 
 TEST(hook, unsubscribe_not_subscribed)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
     ASSERT_NE((void *)NULL, handle);
 
@@ -98,7 +97,7 @@ TEST(hook, unsubscribe_not_subscribed)
 
 TEST(hook, unsibscribe_twice)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
     ASSERT_NE((void *)NULL, handle);
 
@@ -115,7 +114,7 @@ TEST(hook, unsibscribe_twice)
 
 TEST(hook, subscribe_unsubscribe_subscribe)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
     ASSERT_NE((void *)NULL, handle);
 
@@ -134,7 +133,7 @@ TEST(hook, subscribe_unsubscribe_subscribe)
 
 TEST(hook, unsubscribe_first)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
     ASSERT_NE((void *)NULL, handle);
 
@@ -149,7 +148,7 @@ TEST(hook, unsubscribe_first)
 
 TEST(hook, unsubscribe_last)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
     ASSERT_NE((void *)NULL, handle);
 
@@ -164,7 +163,7 @@ TEST(hook, unsubscribe_last)
 
 TEST(hook, three_handles_unsubscribe_first)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
     ASSERT_NE((void *)NULL, handle);
 
@@ -182,7 +181,7 @@ TEST(hook, three_handles_unsubscribe_first)
 
 TEST(hook, three_handles_unsubscribe_second)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
     ASSERT_NE((void *)NULL, handle);
 
@@ -200,7 +199,7 @@ TEST(hook, three_handles_unsubscribe_second)
 
 TEST(hook, three_handles_unsubscribe_third)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     struct handle *handle = hook_subscribe(&hook, (void *)empty_func);
     ASSERT_NE((void *)NULL, handle);
 
@@ -218,7 +217,7 @@ TEST(hook, three_handles_unsubscribe_third)
 
 TEST(hook, attach)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     ASSERT_EQ(hook.attached, false);
 
     ASSERT_EQ(0, hook_attach(&hook, (void *)empty_func));
@@ -229,7 +228,7 @@ TEST(hook, attach)
 
 TEST(hook, attach_twice)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     ASSERT_EQ(hook.attached, false);
 
     ASSERT_EQ(0, hook_attach(&hook, (void *)empty_func));
@@ -245,7 +244,7 @@ TEST(hook, attach_twice)
 
 TEST(hook, attach_invalid)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     ASSERT_EQ(hook.attached, false);
 
     ASSERT_EQ(EINVAL, hook_attach(&hook, NULL));
@@ -258,7 +257,7 @@ TEST(hook, attach_invalid)
 
 TEST(hook, attach_then_attach_invalid)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     ASSERT_EQ(hook.attached, false);
 
     ASSERT_EQ(0, hook_attach(&hook, (void *)empty_func));
@@ -274,7 +273,7 @@ TEST(hook, attach_then_attach_invalid)
 
 TEST(hook, attach_detach)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
     ASSERT_EQ(hook.attached, false);
 
     ASSERT_EQ(0, hook_attach(&hook, (void *)empty_func));
@@ -290,7 +289,7 @@ TEST(hook, attach_detach)
 
 TEST(hook, detach_no_attach)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
 
     ASSERT_EQ(EALREADY, hook_detach(&hook));
 
@@ -300,7 +299,7 @@ TEST(hook, detach_no_attach)
 
 TEST(hook, attach_detach_detach)
 {
-    struct hook hook = {0};
+    struct hook hook = { 0 };
 
     ASSERT_EQ(0, hook_attach(&hook, (void *)empty_func));
 

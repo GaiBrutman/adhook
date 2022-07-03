@@ -8,16 +8,15 @@
 
 #pragma once
 
-#include <stdlib.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 /**
  * @brief Call the next handle in the hook.
  */
 #define call_next(hook, ...)                                      \
     ({                                                            \
-        if ((hook)->handles->next)                                \
-        {                                                         \
+        if ((hook)->handles->next) {                              \
             (hook)->current_handle = (hook)->handles->next;       \
             return (hook)->current_handle->callback(__VA_ARGS__); \
         }                                                         \
@@ -26,8 +25,7 @@
 /**
  * @brief Hook subscription handle.
  */
-struct handle
-{
+struct handle {
     struct handle *next; // Next handle in the list.
     void *(*callback)(); // Callback function.
 };
@@ -35,8 +33,7 @@ struct handle
 /**
  * @brief Hook structure.
  */
-struct hook
-{
+struct hook {
     void *symbol;                  // Hooked symbol.
     bool attached;                 // Whether the hook is attached.
     struct handle *handles;        // Linked list of handles.

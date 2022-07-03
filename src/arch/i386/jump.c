@@ -1,17 +1,16 @@
 #include "arch/jump.h"
 
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
 #include <errno.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define JUMP_SIZE 6
 
 // TODO: Optimize for near jumps
 int patch_jump(void *symbol, size_t size, void *target)
 {
-    if (size < JUMP_SIZE)
-    {
+    if (size < JUMP_SIZE) {
         return EINVAL;
     }
     memcpy(symbol, "\x68\x00\x00\x00\x00\xc3", JUMP_SIZE);

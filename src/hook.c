@@ -1,16 +1,14 @@
 #include "adhook/hook.h"
 
-#include <stdlib.h>
 #include <errno.h>
+#include <stdlib.h>
 
 int hook_attach(struct hook *hook, void *symbol)
 {
-    if (NULL == hook || NULL == symbol)
-    {
+    if (NULL == hook || NULL == symbol) {
         return EINVAL;
     }
-    if (hook->attached)
-    {
+    if (hook->attached) {
         return EALREADY;
     }
 
@@ -21,12 +19,10 @@ int hook_attach(struct hook *hook, void *symbol)
 
 int hook_detach(struct hook *hook)
 {
-    if (NULL == hook)
-    {
+    if (NULL == hook) {
         return EINVAL;
     }
-    if (!hook->attached)
-    {
+    if (!hook->attached) {
         return EALREADY;
     }
 
@@ -37,33 +33,27 @@ int hook_detach(struct hook *hook)
 
 struct handle *hook_subscribe(struct hook *hook, void *callback)
 {
-    if (NULL == hook || NULL == callback)
-    {
+    if (NULL == hook || NULL == callback) {
         errno = EINVAL;
         return NULL;
     }
-    if (hook->attached)
-    {
+    if (hook->attached) {
         errno = EBUSY;
         return NULL;
     }
 
     struct handle *handle = malloc(sizeof(struct handle));
-    if (NULL == handle)
-    {
+    if (NULL == handle) {
         return NULL;
     }
     handle->callback = callback;
     handle->next = NULL;
 
-    if (NULL == hook->handles)
-    {
+    if (NULL == hook->handles) {
         // First handle.
         hook->handles = handle;
         hook->current_handle = handle;
-    }
-    else
-    {
+    } else {
         // Link handle to hook.
         hook->last_handle->next = handle;
     }
@@ -74,34 +64,26 @@ struct handle *hook_subscribe(struct hook *hook, void *callback)
 
 int hook_unsubscribe(struct hook *hook, struct handle *handle)
 {
-    if (NULL == hook || NULL == handle)
-    {
+    if (NULL == hook || NULL == handle) {
         return EINVAL;
     }
-    if (hook->attached)
-    {
+    if (hook->attached) {
         return EBUSY;
     }
 
     struct handle *prev = NULL;
     struct handle *curr = hook->handles;
-    while (NULL != curr)
-    {
-        if (curr == handle)
-        {
+    while (NULL != curr) {
+        if (curr == handle) {
             // Unlink handle from hook.
-            if (NULL == prev)
-            {
+            if (NULL == prev) {
                 hook->handles = hook->current_handle = curr->next;
-            }
-            else
-            {
+            } else {
                 prev->next = curr->next;
             }
 
             // unlink last handle
-            if (curr == hook->last_handle)
-            {
+            if (curr == hook->last_handle) {
                 hook->last_handle = prev;
             }
 
@@ -121,18 +103,15 @@ int hook_unsubscribe(struct hook *hook, struct handle *handle)
 
 int hook_clear(struct hook *hook)
 {
-    if (NULL == hook)
-    {
+    if (NULL == hook) {
         return EINVAL;
     }
-    if (hook->attached)
-    {
+    if (hook->attached) {
         return EALREADY;
     }
 
     struct handle *handle = hook->handles;
-    while (NULL != handle)
-    {
+    while (NULL != handle) {
         struct handle *next = handle->next;
         free(handle);
         handle = next;

@@ -9,7 +9,6 @@
 #pragma once
 
 #include <adhook/hook.h>
-
 #include <stdlib.h>
 
 /**

@@ -1,14 +1,13 @@
 #include "adhook/patch.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
 
-#include "arch/jump.h"
 #include "adhook/hook.h"
+#include "arch/jump.h"
 
-struct patch_priv
-{
+struct patch_priv {
     void *symbol_backup;
     size_t backup_size;
 };
@@ -27,8 +26,7 @@ static int prepare_patch(struct hook *hook, void *symbol, size_t size)
 
     // Allocate private struct.
     struct patch_priv *priv = malloc(sizeof(struct patch_priv));
-    if (NULL == priv)
-    {
+    if (NULL == priv) {
         ret = ENOMEM;
         goto out;
     }
@@ -36,8 +34,7 @@ static int prepare_patch(struct hook *hook, void *symbol, size_t size)
     // Backup the original code.
     priv->symbol_backup = malloc(size);
     priv->backup_size = size;
-    if (NULL == priv->symbol_backup)
-    {
+    if (NULL == priv->symbol_backup) {
         ret = ENOMEM;
         goto free_priv;
     }
@@ -57,14 +54,12 @@ int patch_install(struct hook *hook, void *symbol, size_t size)
     int ret = 0;
 
     // Hook must have at least one handle when installing.
-    if (NULL == hook || NULL == hook->handles)
-    {
+    if (NULL == hook || NULL == hook->handles) {
         ret = EINVAL;
         goto out;
     }
 
-    if (hook->attached)
-    {
+    if (hook->attached) {
         ret = EALREADY;
         goto out;
     }
@@ -83,14 +78,12 @@ void patch_uninstall(struct hook *hook)
 {
     struct patch_priv *priv = NULL;
 
-    if (NULL == hook || !hook->attached || NULL == hook->priv)
-    {
+    if (NULL == hook || !hook->attached || NULL == hook->priv) {
         return;
     }
 
     priv = (struct patch_priv *)hook->priv;
-    if (NULL == priv->symbol_backup)
-    {
+    if (NULL == priv->symbol_backup) {
         // ? Should we set hook->attached to false?
         goto free_priv;
     }
