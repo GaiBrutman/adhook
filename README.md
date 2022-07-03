@@ -4,8 +4,18 @@ ad-hook is an advanced, cross-architecture hooking framework, for you and your f
 
 ## Build Instructions
 
+As of this version, an `ARCH` variable is required when building.
+
 ```sh
-make # :)
+cmake -S . -B build -DARCH=$ARCH
+cmake --build build
+```
+
+## Running Unit Tests
+
+```sh
+cd build
+ctest
 ```
 
 ## Features

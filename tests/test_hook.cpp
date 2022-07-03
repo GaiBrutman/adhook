@@ -9,13 +9,14 @@
 #include <stdlib.h>
 #include <cstddef>
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 extern "C"
 {
-#include "adhook/hook.h"
+#include <adhook/hook.h>
 }
 
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 
 void empty_func()

@@ -1,4 +1,4 @@
-#include "arch/symsize.h"
+#include "adhook/arch/symsize.h"
 
 #include <stdlib.h>
 #include <stdint.h>

@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "hook.h"
+#include <adhook/hook.h>
 
 #include <stdlib.h>
 

@@ -9,11 +9,11 @@
 #include <stdlib.h>
 #include <cstddef>
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 extern "C"
 {
-#include "adhook/arch/symsize.h"
+#include <adhook/arch/symsize.h>
 }
 
 bool is_prime(int n)
