@@ -26,5 +26,7 @@ target_include_directories(adhook
         src
 )
 
+target_compile_options(adhook PRIVATE -Werror -Wall -Wextra)
+
 add_subdirectory(examples)
 add_subdirectory(tests)
