@@ -13,6 +13,12 @@ cmake --build build
 
 ## Running Unit Tests
 
+To build the unit tests, the `BUILD_TESTING` flag must be set to ON.
+
+```sh
+... -DBUILD_TESTING=ON
+```
+
 ```sh
 cd build
 ctest

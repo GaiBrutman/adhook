@@ -29,4 +29,7 @@ target_include_directories(adhook
 target_compile_options(adhook PRIVATE -Werror -Wall -Wextra)
 
 add_subdirectory(examples)
-add_subdirectory(tests)
+
+if (BUILD_TESTING)
+    add_subdirectory(tests)
+endif()
