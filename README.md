@@ -37,7 +37,7 @@ That is, more patching methods can be implemented using the core hooking logic.
 
 ## Supported architectures
 
-- [x] i386  
+- [x] i386
 - [x] x86_64
 - [ ] arm32le
 - [ ] arm32be

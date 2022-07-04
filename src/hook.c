@@ -1,6 +1,7 @@
 #include "adhook/hook.h"
 
 #include <errno.h>
+#include <stdbool.h>
 #include <stdlib.h>
 
 int hook_attach(struct hook *hook, void *symbol)

@@ -53,7 +53,7 @@ int hook_attach(struct hook *hook, void *symbol);
 
 /**
  * @brief Detach a hook from a symbol - called by an injector after uninjection is complete.
- * 
+ *
  * @param hook The hook to detach.
  * @return int 0 on success, other on failure.
  */

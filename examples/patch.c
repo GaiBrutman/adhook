@@ -10,27 +10,36 @@
 #include "adhook/arch/symsize.h"
 #include "adhook/hook.h"
 
+#define USER_NAME_MAX_LEN (20)
+#define ADMIN_AGE (18)
+#define GUEST_AGE (20)
+#define HOOKED_USER_AGE (1000)
+#define AGE_DELTA_THRESHOLD (5)
+
 struct user {
-    char name[20];
+    char name[USER_NAME_MAX_LEN];
     int age;
 };
 
 struct user g_admin_user = {
     .name = "admin",
-    .age = 18,
+    .age = ADMIN_AGE,
 };
 
 static bool is_admin(struct user *user)
 {
-    if (NULL == user)
+    if (NULL == user) {
         return false;
+    }
 
-    if (user->age < g_admin_user.age)
+    if (user->age < g_admin_user.age) {
         return false;
+    }
 
     // No way the admin has aged that much since the program started.
-    if (user->age > g_admin_user.age + 5)
+    if (user->age > g_admin_user.age + AGE_DELTA_THRESHOLD) {
         return false;
+    }
 
     return 0 == strcmp(user->name, g_admin_user.name);
 }
@@ -42,7 +51,7 @@ static bool my_is_admin(struct user *user)
     printf("I just hooked is_admin :)\n");
     printf("I'm %s, %d years old.\n", user->name, user->age);
 
-    user->age = 1000;
+    user->age = HOOKED_USER_AGE;
 
     call_next(&g_is_admin_hook, user);
     return true; // Fallback if no other handle is subscribed.
@@ -92,7 +101,7 @@ void uninstall_is_admin_hook(void)
 
 int main(void)
 {
-    struct user user = { .name = "guest", .age = 20 };
+    struct user user = { .name = "guest", .age = GUEST_AGE };
     size_t is_admin_addr = (size_t)is_admin;
 
     // Set is_admin memory protection to RWX.
@@ -111,6 +120,4 @@ int main(void)
     }
 
     uninstall_is_admin_hook();
-
-    return 0;
 }
