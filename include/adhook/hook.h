@@ -5,8 +5,8 @@
  * @version 0.1
  * @date 2022-03-09
  */
-
-#pragma once
+#ifndef ADHOOK_HOOK_H
+#define ADHOOK_HOOK_H
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -84,3 +84,5 @@ int hook_unsubscribe(struct hook *hook, struct handle *handle);
  * @return int 0 on success, other on failure.
  */
 int hook_clear(struct hook *hook);
+
+#endif // ADHOOK_HOOK_H

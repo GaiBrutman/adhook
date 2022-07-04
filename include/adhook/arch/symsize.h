@@ -5,8 +5,8 @@
  * @version 0.1
  * @date 2022-03-09
  */
-
-#pragma once
+#ifndef ADHOOK_ARCH_SYMSIZE_H
+#define ADHOOK_ARCH_SYMSIZE_H
 
 #include <stdlib.h>
 
@@ -17,3 +17,5 @@
  * @return size_t The size of the function.
  */
 size_t calc_function_size(void *func);
+
+#endif // ADHOOK_ARCH_SYMSIZE_H

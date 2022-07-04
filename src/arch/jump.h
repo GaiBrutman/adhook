@@ -5,8 +5,8 @@
  * @version 0.1
  * @date 2022-03-09
  */
-
-#pragma once
+#ifndef ADHOOK_ARCH_JUMP_H //NOLINT
+#define ADHOOK_ARCH_JUMP_H
 
 #include <stdlib.h>
 
@@ -25,3 +25,5 @@ int patch_jump(void *symbol, size_t size, void *target);
  * @return The size of the jump instruction.
  */
 size_t get_payload_size(void);
+
+#endif // ADHOOK_ARCH_JUMP_H

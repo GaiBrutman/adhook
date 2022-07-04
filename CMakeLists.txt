@@ -26,6 +26,5 @@ target_include_directories(adhook
         src
 )
 
-
 add_subdirectory(examples)
 add_subdirectory(tests)

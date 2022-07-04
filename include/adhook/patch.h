@@ -5,8 +5,8 @@
  * @version 0.1
  * @date 2022-03-09
  */
-
-#pragma once
+#ifndef ADHOOK_PATCH_H
+#define ADHOOK_PATCH_H
 
 #include <adhook/hook.h>
 #include <stdlib.h>
@@ -27,3 +27,5 @@ int patch_install(struct hook *hook, void *symbol, size_t size);
  * @param[in,out] hook The hook to uninstall.
  */
 void patch_uninstall(struct hook *hook);
+
+#endif // ADHOOK_PATCH_H
